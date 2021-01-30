@@ -1,4 +1,5 @@
 from abc import ABC
+import math
 
 class AbstractGates(ABC):
 
@@ -44,6 +45,17 @@ class Gates(AbstractGates):
         for i in range(len(cut_sets)):
             print('mcs_{}={}\n'.format(i, cut_sets[i]))
 
+class Distributions(Gates):
+    def __init__(self):
+        pass
+
+    def exp_dist(self,rate,t):
+           return math.exp(rate*t)
+
+
+
+
+
 
 if __name__ == "__main__":
     z = Gates()
@@ -56,3 +68,7 @@ if __name__ == "__main__":
     z.pretty_display(out)
     out = z.mcs(out)
     z.pretty_display(out)
+    distr = Distributions()
+    calc_distr = distr.exp_dist(-2.5,5)
+    print(calc_distr)
+
