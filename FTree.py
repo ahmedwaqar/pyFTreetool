@@ -1,6 +1,5 @@
 from abc import ABC
 import math
-from functools import reduce
 
 
 class AbstractGates(ABC):
@@ -59,7 +58,10 @@ class Distributions(Gates):
         return math.exp(rate * t)
 
     def prod_list(self, iterlist):
-        return reduce(lambda x, y: float(x) * float (y), iterlist)
+        result = 1
+        for x in iterlist:
+            result *= 1 - x
+        return result
 
     def prob(self, mcs, distr_dict):
         prob_calc = 0
@@ -68,33 +70,33 @@ class Distributions(Gates):
             for event in cut_set:
                 prob_list.append(distr_dict[f"{event}"])
             prob_calc += self.prod_list(prob_list)
-        return prob_calc
+        return 1 - prob_calc
 
-.
+
 if __name__ == "__main__":
     z = Gates()
     a = [['a', 'b', 'c'], ['c', 'd']]
     b = [['e', 'f', 'g'], ['h', 'i']]
     out = z.and_gate(a, b)
-    print(out)
     out = z.or_gate(out, b)
     out = z.or_gate(out, b)
     z.pretty_display(out)
     out = z.mcs(out)
     z.pretty_display(out)
     distr = Distributions()
-    calc_distr = distr.exp_dist(-2.5, 5)
-    # print(calc_distr)
+    calc_distr = distr.exp_dist(0, 5)
+    product = distr.prod_list([1.0, 0.4, 0.6])
+    print(f"value of product = {product}")
     distr_dict = {
-        'a': 0.5,
-        'b': 0.2,
-        'c': 1,
-        'd': 0.4,
-        'e': 0.3,
-        'f': 0.5,
-        'g': 0.4,
-        'h': '0.33',
-        'i': 0.1,
+        'a': 1 - distr.exp_dist(-0.5, 5),
+        'b': 1 - distr.exp_dist(-0.2, 5),
+        'c': 1.0,
+        'd': 1 - distr.exp_dist(-0.4, 5),
+        'e': 1 - distr.exp_dist(-0.3, 5),
+        'f': 1 - distr.exp_dist(-0.2, 5),
+        'g': 1 - distr.exp_dist(-0.3, 5),
+        'h': 1 - distr.exp_dist(-0.33, 5),
+        'i': 1 - distr.exp_dist(-0.2, 5),
     }
     prob_value = distr.prob(out, distr_dict)
     print(prob_value)
