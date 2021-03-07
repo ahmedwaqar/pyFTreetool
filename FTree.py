@@ -26,8 +26,6 @@ class Gates(AbstractGates):
             out += self.atom_extend(i, rnodes)
         return out
 
-    def and_gate_json(self, ljson, rjson):
-        out_json = self.and_gate(ljson['events'], rjson['events'])
 
     def or_gate(self, lnodes, rnodes):
         out = [x[:] for x in lnodes]
@@ -77,9 +75,9 @@ if __name__ == "__main__":
     z = Gates()
     a = [['a', 'b', 'c'], ['c', 'd']]
     b = [['e', 'f', 'g'], ['h', 'i']]
-    out = z.and_gate(a, b)
-    out = z.or_gate(out, b)
-    out = z.or_gate(out, b)
+    top = z.and_gate(E1, E2)
+    E1 = z.or_gate(a, b)
+    E2 = z.and_gate(a, b)
     z.pretty_display(out)
     out = z.mcs(out)
     z.pretty_display(out)

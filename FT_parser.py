@@ -4,8 +4,10 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from networkx.drawing.nx_agraph import write_dot, graphviz_layout
 import sys
+import netgraph
 
-f_path = '/Users/waqarahmed/Documents/tools/python/FT_tool/FTree.py' 
+f_path = '/Users/waqarahmed/Documents/tools/python/FT_tool/FTree.py'
+
 
 class GenerateFT:
     def __init__(self):
@@ -17,12 +19,16 @@ class GenerateFT:
             (a if condition(item) else b).append(item)
         return a, b
 
-    def partition_cond(self, list, cond):
+    def partition_cond(self, ft_list, cond):
+        new_list = []
         part_list = []
-        for x in list:
+        for  x in ft_list:
             if x in [cond]:
-                part_list.append(list[: list.index(x)])
-        return part_list
+                new_list.append(part_list)
+                part_list = []
+                continue
+            part_list.append(x)
+        return new_list
 
     def add_nodes(self, G, list):
         G.add_nodes_from(list)
@@ -32,7 +38,6 @@ class GenerateFT:
         edge_list = edge_list + ([(list[0], list[1])])
         for x in list[2:]:
             edge_list = edge_list + ([(list[1], x)])
-        print(edge_list)
         G.add_edges_from(edge_list)
 
     def print_FT(self, file_path):
@@ -41,41 +46,47 @@ class GenerateFT:
         with open(file_path) as file:
             regex = r'([a-zA-Z]+\.((and)|(or))_gate)'
             gates_search = [lines for lines in file if re.search(regex, lines)]
-            print(gates_search)
             # clean the data extracted from program file
             clean_ft = [i for i in gates_search if not re.search('^([#])', i)]
-            print(clean_ft)
             for i in clean_ft:
                 ft_frag = ft_frag + re.split('=|,|\(|\)', i)
-
             print(ft_frag)
             ft_split_pairs = self.split_on_condition(ft_frag, lambda x: x not in ['\n'])
             print(ft_split_pairs)
             part_ft = self.partition_cond(ft_frag, '\n')
             print(part_ft)
             G = nx.DiGraph()
-            self.add_nodes(G, part_ft[0])
-            plt.subplot(121)
+            for i in part_ft:
+                self.add_nodes(G, i)
+                self.add_edges(G, i)
+            plt.subplot(111)
             write_dot(G, 'test.dot')
 
             # same layout using matplotlib with no labels
             plt.title('draw_networkx')
             pos = graphviz_layout(G, prog='dot')
+            options = {
+                'node_size': 100,
+                'width': 3,
+            }
             nx.draw(
                 G,
                 pos,
                 with_labels=True,
                 arrows=True,
-                node_size=2000,
-                cmap=plt.cm.Blues,
-                node_color=range(len(G)),
+                # cmap=plt.cm.Blues,
+                # node_color=range(len(G)),
+                # **options,
+                node_shape="s",
+                node_color='none',
+                bbox=dict(
+                    facecolor='none', edgecolor='black', boxstyle='round,pad=1'
+                ),
             )
-            plt.savefig('nx_test.png')
+            plt.show()
+            # plt.savefig('nx_test.png')
 
 
 if __name__ == "__main__":
     gen_ft = GenerateFT()
     gen_ft.print_FT(f_path)
-    
-
-    
