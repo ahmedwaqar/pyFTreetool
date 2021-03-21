@@ -8,7 +8,6 @@ import netgraph
 
 f_path = '/Users/waqarahmed/Documents/tools/python/FT_tool/FTree.py'
 
-
 class GenerateFT:
     def __init__(self):
         pass
@@ -50,10 +49,21 @@ class GenerateFT:
             clean_ft = [i for i in gates_search if not re.search('^([#])', i)]
             for i in clean_ft:
                 ft_frag = ft_frag + re.split('=|,|\(|\)', i)
+            ft_frag = [r.strip() for r in ft_frag]
             print(ft_frag)
-            ft_split_pairs = self.split_on_condition(ft_frag, lambda x: x not in ['\n'])
+            temp = []
+            index = 1
+            for i in ft_frag:
+                if i == "z.and_gate" or i == "z.or_gate":
+                   temp.append(i.split('.')[-1]+str(index))
+                   index += 1
+                else:
+                    temp.append(i)
+            ft_frag = temp
+            print(ft_frag)
+            ft_split_pairs = self.split_on_condition(ft_frag, lambda x: x not in [''])
             print(ft_split_pairs)
-            part_ft = self.partition_cond(ft_frag, '\n')
+            part_ft = self.partition_cond(ft_frag, '')
             print(part_ft)
             G = nx.DiGraph()
             for i in part_ft:
