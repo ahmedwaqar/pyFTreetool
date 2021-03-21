@@ -76,7 +76,7 @@ if __name__ == "__main__":
     a = [['a', 'b', 'c'], ['c', 'd']]
     b = [['e', 'f', 'g'], ['h', 'i']]
     top = z.and_gate(E1, E2)
-    E1 = z.or_gate(a, b)
+    E1 = z.or_gate([['a', 'b', 'c'], ['c', 'd']], b)
     E2 = z.and_gate('c', 'd')
     z.pretty_display(out)
     out = z.mcs(out)

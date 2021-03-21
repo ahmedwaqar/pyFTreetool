@@ -48,9 +48,20 @@ class GenerateFT:
             # clean the data extracted from program file
             clean_ft = [i for i in gates_search if not re.search('^([#])', i)]
             for i in clean_ft:
-                ft_frag = ft_frag + re.split('=|,|\(|\)', i)
-            ft_frag = [r.strip() for r in ft_frag]
+                ft_frag += re.split('=|,|\(|\)', i)
+            ft_frag = [r.strip() for r in ft_frag ]
             print(ft_frag)
+            ft_frag_t = []
+            for r in ft_frag:
+                if '[' in r:
+                   ft_frag_t.append(r.split('[')[-1])
+                elif ']' in r:
+                    ft_frag_t.append(r.split(']')[0])
+                else:
+                    ft_frag_t.append(r)
+            ft_frag = ft_frag_t
+            print(ft_frag_t)
+
             temp = []
             index = 1
             for i in ft_frag:
@@ -62,9 +73,7 @@ class GenerateFT:
             ft_frag = temp
             print(ft_frag)
             ft_split_pairs = self.split_on_condition(ft_frag, lambda x: x not in [''])
-            print(ft_split_pairs)
             part_ft = self.partition_cond(ft_frag, '')
-            print(part_ft)
             G = nx.DiGraph()
             for i in part_ft:
                 self.add_nodes(G, i)
@@ -73,7 +82,7 @@ class GenerateFT:
             write_dot(G, 'test.dot')
 
             # same layout using matplotlib with no labels
-            plt.title('draw_networkx')
+            plt.title('Fault Tree Diagram')
             pos = graphviz_layout(G, prog='dot')
             options = {
                 'node_size': 100,
