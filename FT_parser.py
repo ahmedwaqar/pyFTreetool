@@ -8,6 +8,7 @@ import netgraph
 
 f_path = '/Users/waqarahmed/Documents/tools/python/FT_tool/FTree.py'
 
+
 class GenerateFT:
     def __init__(self):
         pass
@@ -21,7 +22,7 @@ class GenerateFT:
     def partition_cond(self, ft_list, cond):
         new_list = []
         part_list = []
-        for  x in ft_list:
+        for x in ft_list:
             if x in [cond]:
                 new_list.append(part_list)
                 part_list = []
@@ -49,12 +50,12 @@ class GenerateFT:
             clean_ft = [i for i in gates_search if not re.search('^([#])', i)]
             for i in clean_ft:
                 ft_frag += re.split('=|,|\(|\)', i)
-            ft_frag = [r.strip() for r in ft_frag ]
+            ft_frag = [r.strip() for r in ft_frag]
             print(ft_frag)
             ft_frag_t = []
             for r in ft_frag:
                 if '[' in r:
-                   ft_frag_t.append(r.split('[')[-1])
+                    ft_frag_t.append(r.split('[')[-1])
                 elif ']' in r:
                     ft_frag_t.append(r.split(']')[0])
                 else:
@@ -66,8 +67,8 @@ class GenerateFT:
             index = 1
             for i in ft_frag:
                 if i == "z.and_gate" or i == "z.or_gate":
-                   temp.append(i.split('.')[-1]+str(index))
-                   index += 1
+                    temp.append(i.split('.')[-1] + str(index))
+                    index += 1
                 else:
                     temp.append(i)
             ft_frag = temp
@@ -88,21 +89,56 @@ class GenerateFT:
                 'node_size': 100,
                 'width': 3,
             }
-            nx.draw(
+            nx.draw_networkx(
                 G,
-                pos,
+                pos=pos,
                 with_labels=True,
+                node_size=2000,
+                alpha=0.3,
                 arrows=True,
-                # cmap=plt.cm.Blues,
-                # node_color=range(len(G)),
-                # **options,
-                node_shape="s",
-                node_color='none',
-                bbox=dict(
-                    facecolor='none', edgecolor='black', boxstyle='round,pad=1'
-                ),
+                arrowsize=20,
+                width=2,
             )
+            # draw white circles over the lines
+            nx.draw_networkx(
+                G,
+                pos=pos,
+                with_labels=True,
+                node_size=2000,
+                alpha=1,
+                arrows=True,
+                arrowsize=20,
+                width=2,
+                node_color='w',
+            )
+            # draw the nodes as desired
+            nx.draw_networkx(
+                G,
+                pos=pos,
+                node_size=2000,
+                alpha=0.3,
+                arrows=True,
+                arrowsize=20,
+                width=2,
+            )
+            nx.draw_networkx_labels(G, pos=pos)
+            plt.axis("off")
             plt.show()
+            # nx.draw_networkx(
+            # G,
+            # pos,
+            # with_labels=True,
+            # arrows=True,
+            # # cmap=plt.cm.Blues,
+            # # node_color=range(len(G)),
+            # # **options,
+            # node_shape="s",
+            # node_color='none',
+            # # bbox=dict(
+            # # facecolor='none', edgecolor='black', boxstyle='round,pad=1'
+            # # ),
+            # )
+            # plt.show()
             # plt.savefig('nx_test.png')
 
 
