@@ -7,7 +7,7 @@ from networkx.drawing.nx_agraph import write_dot, graphviz_layout
 import sys
 import netgraph
 
-f_path = '/Users/waqarahmed/Documents/tools/python/FT_tool/FTree.py'
+f_path = 'FTree.py'
 
 
 class GenerateFT:
