@@ -62,19 +62,22 @@ class GenerateFT:
         index = 1
         for i in nodes:
             if i == "z.and_gate" or i == "z.or_gate":
-                nodes_t.append(i.split('.')[-1] + str(index))
+                nodes_t.append(
+                    i.split('.')[-1].split('_')[0] + ' ' + '(G' + str(index) + ')'
+                )
                 index += 1
             else:
                 nodes_t.append(i)
         return nodes_t
 
     def plot_graph_ft(self, parsed_ft):
+        n_size = 320
         G = nx.DiGraph()
         for i in parsed_ft:
             self.add_nodes(G, i)
             self.add_edges(G, i)
         plt.subplot(111)
-        write_dot(G, 'test.dot')
+        # write_dot(G, 'test.dot')
 
         # same layout using matplotlib with no labels
         plt.title('Fault Tree Diagram')
@@ -83,33 +86,36 @@ class GenerateFT:
             G,
             pos=pos,
             with_labels=True,
-            node_size=2000,
+            # node_size=[len(v) * n_size for v in G.nodes()],
             alpha=0.3,
             arrows=True,
             arrowsize=20,
             width=2,
+            bbox=dict(facecolor="skyblue", edgecolor='black', boxstyle='round,pad=0.2'),
         )
         # draw white circles over the lines
         nx.draw_networkx(
             G,
             pos=pos,
             with_labels=True,
-            node_size=2000,
+            # node_size=[len(v) * n_size for v in G.nodes()],
             alpha=1,
             arrows=True,
             arrowsize=20,
             width=2,
             node_color='w',
+            bbox=dict(facecolor="skyblue", edgecolor='black', boxstyle='round,pad=0.2'),
         )
         # draw the nodes as desired
         nx.draw_networkx(
             G,
             pos=pos,
-            node_size=2000,
+            # node_size=[len(v) * n_size for v in G.nodes()],
             alpha=0.3,
             arrows=True,
             arrowsize=20,
             width=2,
+            bbox=dict(facecolor="skyblue", edgecolor='black', boxstyle='round,pad=0.2'),
         )
         nx.draw_networkx_labels(G, pos=pos)
         plt.axis("off")
