@@ -7,7 +7,7 @@ from networkx.drawing.nx_agraph import write_dot, graphviz_layout
 import sys
 import netgraph
 
-f_path = 'FTree.py'
+f_path = 'ft_program.py'
 
 
 class GenerateFT:
@@ -71,7 +71,7 @@ class GenerateFT:
         return nodes_t
 
     def plot_graph_ft(self, parsed_ft):
-        n_size = 320
+        # n_size = 320
         G = nx.DiGraph()
         for i in parsed_ft:
             self.add_nodes(G, i)
@@ -127,9 +127,7 @@ class GenerateFT:
             # clean the data extracted from program file
             clean_ft = self.filter_comments(gates_search)
             ft_frag = self.strip_gates_param(clean_ft)
-            print(ft_frag)
             ft_frag = self.index_gates(ft_frag)
-            print(ft_frag)
             part_ft = self.partition_cond(ft_frag, '')
             self.plot_graph_ft(part_ft)
 

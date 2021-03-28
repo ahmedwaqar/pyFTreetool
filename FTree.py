@@ -71,30 +71,3 @@ class Distributions(Gates):
         return 1 - prob_calc
 
 
-if __name__ == "__main__":
-    z = Gates()
-    a = [['a', 'b', 'c'], ['c', 'd']]
-    b = [['e', 'f', 'g'], ['h', 'i']]
-    top = z.and_gate(E1, E2)
-    E1 = z.or_gate([['a', 'b', 'c'], ['c', 'd']], b)
-    E2 = z.and_gate('c', 'd')
-    z.pretty_display(out)
-    out = z.mcs(out)
-    z.pretty_display(out)
-    distr = Distributions()
-    calc_distr = distr.exp_dist(0, 5)
-    product = distr.prod_list([1.0, 0.4, 0.6])
-    print(f"value of product = {product}")
-    distr_dict = {
-        'a': 1 - distr.exp_dist(-0.5, 5),
-        'b': 1 - distr.exp_dist(-0.2, 5),
-        'c': 1.0,
-        'd': 1 - distr.exp_dist(-0.4, 5),
-        'e': 1 - distr.exp_dist(-0.3, 5),
-        'f': 1 - distr.exp_dist(-0.2, 5),
-        'g': 1 - distr.exp_dist(-0.3, 5),
-        'h': 1 - distr.exp_dist(-0.33, 5),
-        'i': 1 - distr.exp_dist(-0.2, 5),
-    }
-    prob_value = distr.prob(out, distr_dict)
-    print(prob_value)
