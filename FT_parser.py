@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 import re
-import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt
 from networkx.drawing.nx_agraph import write_dot, graphviz_layout
 import sys
-import netgraph
+import argparse
 
-f_path = 'ft_program.py'
+
+# f_path = 'ft_program.py'
 
 
 class GenerateFT:
@@ -133,5 +133,13 @@ class GenerateFT:
 
 
 if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser(add_help=False)
+    parser.add_argument("-h", "--help",action="help", help="Specify fault tree program path as an argument to FT_parser, e.g., ./FT_parser.py ft_program.py")
+    parser.add_argument("ft_path", default=argparse.SUPPRESS, help="Provide a path to FT program")
+    args = parser.parse_args()
+
+    if args.ft_path:
+        f_path = args.ft_path
     gen_ft = GenerateFT()
     gen_ft.print_FT(f_path)
