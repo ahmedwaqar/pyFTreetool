@@ -3,13 +3,16 @@ import FTree as ft
 
 if __name__ == "__main__":
     z = ft.Gates()
-    a = [['a', 'b', 'c'], ['c', 'd']]
+    a = [['a']]
     b = [['e', 'f', 'g'], ['h', 'i']]
-    E1 = z.or_gate([['a', 'b', 'c'], ['c', 'd']], 'b')
-    E2 = z.and_gate(a, b)
+    E1 = z.or_gate(a,b)
+    E2 = z.and_gate(a ,b)
+    print(E1)
+    print(E2)
     top = z.and_gate(E1, E2)
     z.pretty_display(top)
     out = z.mcs(top)
+    print(out)
     z.pretty_display(out)
     distr = ft.Distributions()
     calc_distr = distr.exp_dist(0, 5)

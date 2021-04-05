@@ -26,15 +26,27 @@ class Gates(AbstractGates):
             out += self.atom_extend(i, rnodes)
         return out
 
+    def and_gate_opt(self,lnodes,rnodes):
+        out = []
+        for i in lnodes:
+            for r in rnodes:
+                out.append(i+r)
+        return out
+
 
     def or_gate(self, lnodes, rnodes):
         out = [x[:] for x in lnodes]
         out += rnodes
         return out
 
+    def sort_sublists(self,input_list):
+        result = list(map(sorted, input_list))
+        return result
+
     def mcs(self, cut_set):
         out = []
         remove_duplicates = []
+        cut_set =self.sort_sublists(cut_set)
         for i in cut_set:
             out.append(list(dict.fromkeys(i)))
         for cut_set in out:
@@ -42,6 +54,12 @@ class Gates(AbstractGates):
                 remove_duplicates.append(cut_set)
         out = remove_duplicates
         return out
+
+    def mcs_opt(self,cut_set):
+        import itertools
+        cut_set.sort()
+        print(cut_set)
+        return list(k for k,_ in itertools.groupby(cut_set))
 
     def pretty_display(self, cut_sets):
         for i in range(len(cut_sets)):
