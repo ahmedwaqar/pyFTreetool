@@ -1,5 +1,7 @@
 from abc import ABC
 import math
+import itertools
+
 
 
 class AbstractGates(ABC):
@@ -46,14 +48,21 @@ class Gates(AbstractGates):
     def mcs(self, cut_set):
         out = []
         remove_duplicates = []
-        cut_set =self.sort_sublists(cut_set)
-        for i in cut_set:
+        cut_sets =self.sort_sublists(cut_set)
+        for i in cut_sets:
             out.append(list(dict.fromkeys(i)))
         for cut_set in out:
             if cut_set not in remove_duplicates:
                 remove_duplicates.append(cut_set)
-        out = remove_duplicates
-        return out
+        temp = [x[:] for x in remove_duplicates]
+        for a, b in itertools.combinations(temp,2):
+            try:
+                if set(a) <= set(b):
+                    temp.remove(b)
+            except:
+                continue
+        out1 = temp
+        return out1
 
     def mcs_opt(self,cut_set):
         import itertools

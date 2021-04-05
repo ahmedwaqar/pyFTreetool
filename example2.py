@@ -35,7 +35,7 @@ if __name__ == "__main__":
     node_2 = z.or_gate(node_7,z.or_gate([['node_29']],z.or_gate(node_6,[['node_5']])))
     node_4 = z.or_gate(node_9,[['node_10']])
     top = z.and_gate(node_2, z.and_gate([['node_3']],node_4))
-    mcs = z.mcs(top)
+    mcs = z.mcs(node_60)
 
     z.pretty_display(mcs)
 
