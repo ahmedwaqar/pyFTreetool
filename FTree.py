@@ -59,6 +59,8 @@ class Gates(AbstractGates):
             try:
                 if set(a) <= set(b):
                     temp.remove(b)
+                elif set(b) <= set(a):
+                    temp.remove(a)
             except:
                 continue
         out1 = temp
