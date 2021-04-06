@@ -15,11 +15,6 @@ class Gates(AbstractGates):
     def __init__(self):
         pass
 
-    def pairwise(self, iterable):
-        "s -> (s0, s1), (s2, s3), (s4, s5), ..."
-        a = iter(iterable)
-        return itertools.zip_longest(a, a)
-
     def atom_extend(self, lnodes, rnodes):
         out = [x[:] for x in rnodes]
         for i in out:
@@ -66,6 +61,7 @@ class Gates(AbstractGates):
                     temp.remove(a)
             except:
                 continue
+        out1 = temp
         return temp
 
     def mcs_opt(self, cut_set):
