@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+import sys
+
+sys.path.insert(1, "../")
 import FTree as ft
 
 if __name__ == "__main__":
