@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-import sys
-sys.path.insert(1,'../')
+
 import FTree as ft
 
 if __name__ == "__main__":
     z = ft.Gates()
-    node_4 = z.or_gate([['F']],[['G']])
-    node_5 = z.and_gate([['H']],[['I']])
-    node_2 = z.or_gate(node_4,z.or_gate([['B']],[['C']]))
-    node_3 = z.or_gate(z.or_gate([['C']],[['D']]), node_5)
-    node_1 = z.and_gate(node_2,node_3)
-    mcs = z.mcs(node_1)
-    z.pretty_display(mcs)
+    G4 = z.or_gate([["4"]], [["5"]])
+    G5 = z.or_gate([["6"]], [["7"]])
+    G6 = z.or_gate([["6"]], [["8"]])
+    G2 = z.and_gate(G4, G5)
+    G3 = z.or_gate([["3"]], G6)
+    G1 = z.or_gate(G2, G3)
+    G0 = z.or_gate([["1"]], z.or_gate(G1, [["2"]]))
 
+    mcs = z.mcs(G0)
+    z.pretty_display(mcs)
