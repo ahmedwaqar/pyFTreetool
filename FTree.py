@@ -12,22 +12,13 @@ class AbstractGates(ABC):
 
 
 class Gates(AbstractGates):
+    '''Mocus algorithm is encoded in the defns of and_gate and or_gate and
+    finally a call to mcs remove the duplicate within the cutsets and also reduce the cutsets to minimal'''
     def __init__(self):
         pass
 
-    def atom_extend(self, lnodes, rnodes):
-        out = [x[:] for x in rnodes]
-        for i in out:
-            i.extend(lnodes)
-        return out
-
     def and_gate(self, lnodes, rnodes):
-        out = []
-        for i in lnodes:
-            out += self.atom_extend(i, rnodes)
-        return out
-
-    def and_gate_opt(self, lnodes, rnodes):
+        '''add nodes to each of cutsets'''
         out = []
         for i in lnodes:
             for r in rnodes:
@@ -35,6 +26,7 @@ class Gates(AbstractGates):
         return out
 
     def or_gate(self, lnodes, rnodes):
+        '''extend cutsets'''
         out = [x[:] for x in lnodes]
         out += rnodes
         return out
@@ -52,23 +44,16 @@ class Gates(AbstractGates):
         for cut_set in out:
             if cut_set not in remove_duplicates:
                 remove_duplicates.append(cut_set)
-        temp = [x[:] for x in remove_duplicates]
-        for a, b in itertools.combinations(temp, 2):
+        minimal_cuts = [x[:] for x in remove_duplicates]
+        for a, b in itertools.combinations(minimal_cuts, 2):
             try:
                 if set(a) <= set(b):
-                    temp.remove(b)
+                    minimal_cuts.remove(b)
                 elif set(b) <= set(a):
-                    temp.remove(a)
+                    minimal_cuts.remove(a)
             except:
                 continue
-        return temp
-
-    def mcs_opt(self, cut_set):
-        import itertools
-
-        cut_set.sort()
-        print(cut_set)
-        return list(k for k, _ in itertools.groupby(cut_set))
+        return minimal_cuts
 
     def pretty_display(self, cut_sets):
         for i in range(len(cut_sets)):
