@@ -61,11 +61,11 @@ if __name__ == "__main__":
     node_61 = z.or_gate([["node_64"]], node_65)
     node_60 = z.and_gate(node_61, z.and_gate([["node_62"]], node_63))
     # Top-level Event for Hazard 1
-    node_2 = z.or_gate(
-        node_7, z.or_gate([["node_29"]], z.or_gate(node_6, [["node_5"]]))
-    )
-    node_4 = z.or_gate(node_9, [["node_10"]])
-    top = z.and_gate(node_2, z.and_gate([["node_3"]], node_4))
+    # node_2 = z.or_gate(
+        # node_7, z.or_gate([["node_29"]], z.or_gate(node_6, [["node_5"]]))
+    # )
+    # node_4 = z.or_gate(node_9, [["node_10"]])
+    # top = z.and_gate(node_2, z.and_gate([["node_3"]], node_4))
 
     # Minimal cutset calculation
     mcs = z.mcs(node_60)
