@@ -71,9 +71,11 @@ class GenerateFT:
                 if '[' in r[i]:
                     r[i] = r[i].split(r'[["')[-1]
                     r[i] = r[i].split(r'[[')[-1]
+                    r[i] = r[i].split(r'["')[-1]
                 if ']' in r[i]:
                     r[i] = r[i].split(r'"]]')[0]
                     r[i] = r[i].split(r']]')[0]
+                    r[i] = r[i].split(r'"]')[0]
                 else:
                     continue
         return frag_t1

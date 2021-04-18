@@ -1,5 +1,5 @@
 .PHONY: clean
-files=%.py %.md Makefile tags
+files=%.py %.md examples Makefile tags
 curr_dir=$(shell pwd | ls)
 
 clean:
