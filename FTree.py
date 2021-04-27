@@ -18,18 +18,29 @@ class Gates(AbstractGates):
     def __init__(self):
         pass
 
-    def and_gate(self, lnodes, rnodes):
+    def and_gate(self, lnodes, rnodes, *args):
         '''add nodes to each of cutsets'''
-        out = []
+        temp = []
         for i in lnodes:
             for r in rnodes:
-                out.append(i + r)
-        return out
+                temp.append(i + r)
+        out1 = []
+        if args:
+            for arg in args:
+                for a1 in arg:
+                    for t in temp:
+                        out1.append(t + a1)
+            return out1
+        else:
+            return temp
 
-    def or_gate(self, lnodes, rnodes):
+    def or_gate(self, lnodes, rnodes, *args):
         '''extend cutsets'''
         out = [x[:] for x in lnodes]
         out += rnodes
+        for arg in args:
+            for a1 in arg:
+                out.append(a1)
         return out
 
     def sort_sublists(self, input_list):
