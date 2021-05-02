@@ -1,0 +1,8 @@
+LICENSE
+README.md
+pyproject.toml
+setup.cfg
+src/pyFTree.egg-info/PKG-INFO
+src/pyFTree.egg-info/SOURCES.txt
+src/pyFTree.egg-info/dependency_links.txt
+src/pyFTree.egg-info/top_level.txt
