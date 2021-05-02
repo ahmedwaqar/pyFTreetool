@@ -3,14 +3,16 @@ import xml.etree.ElementTree as ET
 import itertools
 
 xmlfile = 'diagrams/demo_ft.xml'
-and_gate  =  '''{} = z.and_gate({} '''
+and_gate  =  '''
+{} = z.and_gate({} '''
 or_gate  =  '''
 {} = z.or_gate({} '''
 boiler_plate = '''import FTree as ft
 
 z = ft.Gates()'''
 boiler_plate_end = '''mcs = z.mcs(G1)
-z.pretty_display(mcs)'''
+z.pretty_display(mcs)
+'''
 
 class xml_parser():
     def __init__(self):
