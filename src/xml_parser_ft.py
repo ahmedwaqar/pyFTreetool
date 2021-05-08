@@ -1,13 +1,21 @@
 #!/usr/bin/env python3
 import xml.etree.ElementTree as ET
 import itertools
+import sys
 
-xmlfile = 'diagrams/demo_ft.xml'
+xmlfile = sys.argv[1]
+
+# xmlfile = 'diagrams/demo_ft.xml'
+output_path = sys.argv[2]
 and_gate  =  '''
 {} = z.and_gate({} '''
 or_gate  =  '''
 {} = z.or_gate({} '''
-boiler_plate = '''import FTree as ft
+boiler_plate = '''import os, sys
+
+from os.path import dirname, join, abspath
+sys.path.insert(0, abspath(join(dirname(__file__), '../')))
+import FTree as ft
 
 z = ft.Gates()'''
 boiler_plate_end = '''mcs = z.mcs(G1)
@@ -67,12 +75,13 @@ class xml_parser():
                             if gate_shape not in gate:
                                 gate.append(gate_shape)
                             node_gate = target_temp
+                            node_target = self.get_target(root, node_gate, edges)
                             if 'or' in node_gate.attrib['style']:
                                 gate.append(node_gate.attrib['value'])
                             elif 'and' in node_gate.attrib['style']:
                                 gate.append(node_gate.attrib['value'])
-                            elif self.get_target(root, node_gate, edges):
-                                gate.append(self.get_target(root, node_gate, edges).attrib['value'])
+                            elif node_target:
+                                gate.append(node_target.attrib['value'])
                             else:
                                 gate.append(f"[['{node_gate.attrib['value']}']]")
                     except:
@@ -82,7 +91,7 @@ class xml_parser():
         return ft
 
     def gen_ft_program(self,ft):
-        with open('ft_prog.py','w') as file:
+        with open(output_path,'w') as file:
             file.write(boiler_plate)
             for gates in ft:
                 if 'and_gate' in gates[2]:
