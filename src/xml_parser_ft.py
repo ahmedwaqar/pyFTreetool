@@ -22,6 +22,17 @@ class xml_parser():
         nodes.sort()
         return list(k for k,_ in itertools.groupby(nodes))
 
+    def get_target(self, root, source, edges):
+        for edge in edges:
+            if edge.attrib['source'] == source.attrib['id']:
+                target = root.find(".//mxCell[@id='{}']".format(edge.attrib['target']))
+                # print(edge.attrib)
+                break
+            else:
+                target = None
+        return target
+
+
     def parse_xml(self, xfile):
         tree = ET.parse(xfile)
 
@@ -37,7 +48,12 @@ class xml_parser():
                 source_ob = source.attrib['source']
                 source_id = root.find(".//mxCell[@id='{}']".format(source_ob))
                 gate = []
-                gate.append(source_id.attrib['value'])
+                if ('or' in source_id.attrib['style']) | ('and' in source_id.attrib['style']):
+                    gate.append(source_id.attrib['value'])
+                else:
+                    # self.get_target(root, source, edges))
+                    continue
+
                 gate.append('=')
                 for edge in edges:
                     try:
@@ -53,10 +69,15 @@ class xml_parser():
                             node_gate = target_temp
                             if 'or' in node_gate.attrib['style']:
                                 gate.append(node_gate.attrib['value'])
+                            elif 'and' in node_gate.attrib['style']:
+                                gate.append(node_gate.attrib['value'])
+                            elif self.get_target(root, node_gate, edges):
+                                gate.append(self.get_target(root, node_gate, edges).attrib['value'])
                             else:
                                 gate.append(f"[['{node_gate.attrib['value']}']]")
                     except:
-                        print(edge.attrib)
+                        # print(edge.attrib)
+                        pass
                 ft.append(gate)
         return ft
 
