@@ -2,6 +2,7 @@
 import xml.etree.ElementTree as ET
 import itertools
 import sys
+import toml
 
 xmlfile = sys.argv[1]
 
@@ -20,6 +21,14 @@ import FTree as ft
 z = ft.Gates()'''
 boiler_plate_end = '''mcs = z.mcs(G1)
 z.pretty_display(mcs)
+'''
+prob_bp = '''
+distr = ft.Distributions()
+'''
+
+prob_bp_end = '''
+prob_value = distr.prob(mcs, {})
+print(prob_value)
 '''
 
 class xml_parser():
@@ -107,6 +116,12 @@ class xml_parser():
                     file.write('\n')
             file.write('\n')
             file.write(boiler_plate_end)
+            config = toml.load('conf.toml')
+            print(config)
+            if config['enabled']:
+                file.write(prob_bp)
+                distr_dict = config['failure_rates']
+                file.write(prob_bp_end.format(distr_dict))
 
 
 
