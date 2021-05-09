@@ -21,7 +21,11 @@ One of the two approaches can be used to perform FTA using pyFTreetool.
 
 pyFTreetool provides a `xml_parser` that can take a fault tree diagram drawn using `draw.io` and exported in a XML format.
 The choice of `draw.io` is mainly for its open source features available both in web and desktop version.
+However, not all the styles of fault tree diagrams should be parsed by `xml_parser`, there must be some rules lay down so that
+users can successuly generate python code for given FT diagram. An easy way to learn this approach is consider an exmaple FT
+shown in the figure below. The details of each FT node and the resulting cutsets are described in [1].
 
+![Composite Laminate Structure](/src/diagrams/examplediag.png)
 
 
 
