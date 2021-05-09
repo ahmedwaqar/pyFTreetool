@@ -83,8 +83,7 @@ class Distributions(Gates):
         result = 1
         for x in iterlist:
             result *= x
-            print(result)
-        return 1 - result
+        return result
 
     def prob(self, mcs, distr_dict):
         prob_calc = 0
@@ -92,5 +91,5 @@ class Distributions(Gates):
             prob_list = []
             for event in cut_set:
                 prob_list.append(distr_dict[f"{event}"])
-            prob_calc *= (self.prod_list(prob_list))
+            prob_calc *= (1 - self.prod_list(prob_list))
         return 1 - prob_calc
