@@ -1,0 +1,11 @@
+enabled = false
+
+[failure_rates]
+E1=0.2
+E3=0.2
+E4=0.2
+E5=0.2
+E6=0.2
+E7=0.2
+E8=0.2
+E9=0.2

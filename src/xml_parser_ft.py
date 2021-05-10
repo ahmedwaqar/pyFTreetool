@@ -2,6 +2,8 @@
 import xml.etree.ElementTree as ET
 import itertools
 import sys
+import toml
+from operator import itemgetter
 
 xmlfile = sys.argv[1]
 
@@ -21,13 +23,22 @@ z = ft.Gates()'''
 boiler_plate_end = '''mcs = z.mcs(G1)
 z.pretty_display(mcs)
 '''
+prob_bp = '''
+distr = ft.Distributions()
+'''
+
+prob_bp_end = '''
+prob_value = distr.prob(mcs, {})
+print(prob_value)
+'''
 
 class xml_parser():
     def __init__(self):
         pass
 
     def remove_dup_iter(self, nodes):
-        nodes.sort()
+        # nodes.sort(key=itemgetter(0))
+        # sorted(nodes)
         return list(k for k,_ in itertools.groupby(nodes))
 
     def get_target(self, root, source, edges):
@@ -107,6 +118,11 @@ class xml_parser():
                     file.write('\n')
             file.write('\n')
             file.write(boiler_plate_end)
+            config = toml.load('conf.toml')
+            if config['enabled']:
+                file.write(prob_bp)
+                distr_dict = config['failure_rates']
+                file.write(prob_bp_end.format(distr_dict))
 
 
 
@@ -114,6 +130,9 @@ if __name__ == "__main__":
     xparser = xml_parser()
     ft = xparser.parse_xml(xmlfile)
     ft = xparser.remove_dup_iter(ft)
+    # ft.sort()
+    # sorted(ft, key=itemgetter(3,4))
+    # print(ft_rev)
     ft.reverse()
     xparser.gen_ft_program(ft)
 
