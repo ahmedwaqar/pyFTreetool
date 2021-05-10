@@ -97,7 +97,7 @@ class GenerateFT:
         for i in parsed_ft:
             self.add_nodes(G, i)
             self.add_edges(G, i)
-        plt.figure(figsize=(15, 45))
+        # plt.figure(figsize=(15, 45))
         plt.subplot(111)
         # write_dot(G, 'test.dot')
 
