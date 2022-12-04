@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os
 import argparse
 import subprocess as sp
 
@@ -24,6 +25,14 @@ if __name__ == "__main__":
         sp.run(["cd","output/"])
         with open(args.cutset, "w") as f:
             sp.call(["python3",args.outfile], stdout=f)
+    else:
+        path = args.infile.split('/')[0]
+        file = args.infile.split('/')[1]
+        print(path,file)
+        wd = os.getcwd()
+        os.chdir(wd +  '/' + 'examples/')
+        with open(args.cutset, "w") as f:
+            sp.run(["python3",file], stdout=f)
 
     # gen_ft = GenerateFT()
     # gen_ft.print_FT(f_path)
