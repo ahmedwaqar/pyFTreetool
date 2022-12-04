@@ -45,6 +45,12 @@ The FT python program and the resulting minimal cutsets can be obtained by issui
 
 `pyFTree` automates the parsing of XML FT diagram and the generation of minimal cutsets.
 
+If you wanted to run `pyFTree` directly on python FT program then:
+* Make sure you have specified the path to src folder and imported `FTree` in your python FT program
+* In your `src/` directory run `./pyFTree -i <path-to-python_FT-program> -c <name-of-cutset-file>` The cutset file will be saved in the same directory as python FT program.
+
+Some sample FT programs in the `examples` folder may be a good starting point.
+
 ### Approach 2: Code and Analyze
 
 This approach requires famalarity with python programming languge. The starting point is to create a file with `.py` extension
