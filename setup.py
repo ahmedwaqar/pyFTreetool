@@ -17,6 +17,8 @@ setuptools.setup(
     # },
     install_requires=[
         "networkx",
+        "matplotlib"
+        "pygraphviz"
         ],
     scripts=[
         "src/pyFTree",

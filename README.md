@@ -10,6 +10,7 @@ A quick way to install the pyFTreetool as a python package is to follow the foll
 
 1. At terminal, execute `git clone https://github.com/ahmedwaqar/pyFTreetool`
 2. `cd pyFTreetool && sudo python setup.py install`
+3. Install `pygraphviz` from [https://pygraphviz.github.io/documentation/stable/install.html](https://pygraphviz.github.io/documentation/stable/install.html)
 
 ## Documentation
 
@@ -22,7 +23,7 @@ One of the two approaches can be used to perform FTA using pyFTreetool.
 pyFTreetool provides an `xml_parser` that can take fault tree diagram in an XML format, which is drawn using `draw.io`, and generates a python program that encodes FT model and outputs minimal cutsets.
 The choice of `draw.io` is mainly for its open source features available both in web and desktop version.
 However, not all the styles of fault tree diagrams should be parsed by `xml_parser`, there must be some rules lay down so that
-users can successuly generate python code for a given FT diagram. To learn this approach let us consider an exmaple FT
+users can successfully generate python code for a given FT diagram. To learn this approach let us consider an example FT
 shown in the figure below. The details of each FT node and the resulting cutsets are described in [1].
 
 ![Composite Laminate Structure](/src/diagrams/examplediag.png)
